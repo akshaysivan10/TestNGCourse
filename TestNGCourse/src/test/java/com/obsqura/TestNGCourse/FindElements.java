@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -22,6 +26,11 @@ public class FindElements extends Base {
 		for(WebElement category: menu) {
 			String menuText = category.getText();
 			if(menuText.equals(input)) {
+				Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+						  .withTimeout(Duration.ofSeconds(30))
+						  .pollingEvery(Duration.ofSeconds(5))
+						  .ignoring(NoSuchElementException.class);
+				fluentWait.until(ExpectedConditions.elementToBeClickable(category));
 				category.click();
 				break;
 			}
@@ -43,6 +52,11 @@ public class FindElements extends Base {
 		int expectedNoOfColumns = expectedList.size();
 		
 		List<WebElement> tableHeaderList = driver.findElements(By.xpath("//th[contains(@class,'th-sm')]"));
+		Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+				  .withTimeout(Duration.ofSeconds(30))
+				  .pollingEvery(Duration.ofSeconds(5))
+				  .ignoring(NoSuchElementException.class);
+		fluentWait.until(ExpectedConditions.visibilityOfAllElements(tableHeaderList));
 		List<String> actualList = new ArrayList<String>();
 		for(WebElement tableHeader: tableHeaderList) {
 			String tableHeaderText = tableHeader.getText();

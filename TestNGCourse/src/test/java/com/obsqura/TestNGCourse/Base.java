@@ -14,7 +14,7 @@ public WebDriver driver;
 	@BeforeMethod
 	public void initializeBrowser() {
 		
-		System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\Selenium Eclipse\\AutomationTesting\\src\\main\\java\\com\\obsqura\\AutomationTesting\\Resource\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\asus\\git\\TestNGCourse\\TestNGCourse\\src\\main\\java\\com\\obsqura\\TestNGCourse\\Resource\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("https://selenium.obsqurazone.com/simple-form-demo.php");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

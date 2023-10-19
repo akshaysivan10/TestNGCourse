@@ -30,12 +30,17 @@ public class Alerts extends Base{
 		wait1.until(ExpectedConditions.alertIsPresent());
 		driver.switchTo().alert().dismiss();
 		WebElement promptBox =driver.findElement(By.xpath("//button[@onclick='jsPrompt()']"));
-		promptBox.click();
 		Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
 				  .withTimeout(Duration.ofSeconds(30))
 				  .pollingEvery(Duration.ofSeconds(5))
 				  .ignoring(NoSuchElementException.class);
 		fluentWait.until(ExpectedConditions.elementToBeClickable(promptBox));
+		promptBox.click();
+		Wait<WebDriver> fluentWait1 = new FluentWait<WebDriver>(driver)
+				  .withTimeout(Duration.ofSeconds(30))
+				  .pollingEvery(Duration.ofSeconds(5))
+				  .ignoring(NoSuchElementException.class);
+		fluentWait1.until(ExpectedConditions.alertIsPresent());
 		driver.switchTo().alert().sendKeys("Akshay");
 		driver.switchTo().alert().accept();
 	}

@@ -11,8 +11,12 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -53,6 +57,11 @@ public class Assertion extends Base{
 		
 		driver.navigate().to("https://selenium.obsqurazone.com/check-box-demo.php");
 		WebElement singleCheckBoxClick = driver.findElement(By.xpath("//input[@id='gridCheck']"));
+		Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+				  .withTimeout(Duration.ofSeconds(30))
+				  .pollingEvery(Duration.ofSeconds(5))
+				  .ignoring(NoSuchElementException.class);
+		fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='gridCheck']")));
 		boolean isSingleCheckboxSelectedBeforeClick = singleCheckBoxClick.isSelected();
 		assertFalse(isSingleCheckboxSelectedBeforeClick, "Single checkbox is selected before click");
 	}
@@ -84,6 +93,11 @@ public class Assertion extends Base{
 		
 		String expectedValue = "Show Message Buttons";
 		WebElement showMessageButton = driver.findElement(By.xpath("//button[@id='button-one']"));
+		Wait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver)
+				  .withTimeout(Duration.ofSeconds(30))
+				  .pollingEvery(Duration.ofSeconds(5))
+				  .ignoring(NoSuchElementException.class);
+		fluentWait.until(ExpectedConditions.textToBePresentInElement(showMessageButton, "Show Message"));
 		String showMessageButtonText =  showMessageButton.getText();
 		boolean showMessageButtonValue = showMessageButtonText.equals(expectedValue);
 		assertFalse(showMessageButtonValue,"The text of Show message button is " + expectedValue );
